@@ -1,0 +1,82 @@
+blueprint:
+  name: AI Trader – Vorschläge per Push freigeben
+  description: >-
+    Schickt jeden neuen Ordervorschlag des AI Traders als Push-Nachricht an die Companion-App, mit den Aktionen
+    „Freigeben“ und „Ablehnen“. Entscheidet jemand in der App, verschwindet die Nachricht.
+  domain: automation
+  source_url: https://github.com/mKenfenheuer/ai-trader-homeassistant/blob/main/blueprints/automation/ai_trader/approve_signals.yaml
+  input:
+    notify_device:
+      name: Gerät
+      description: Smartphone mit der Home Assistant Companion-App.
+      selector:
+        device:
+          filter:
+            integration: mobile_app
+    timeout:
+      name: Wartezeit
+      description: So lange bleiben die Aktionen in der Nachricht aktiv.
+      default:
+        hours: 24
+      selector:
+        duration: {}
+
+mode: parallel
+max: 20
+
+triggers:
+  - trigger: event
+    event_type: ai_trader_signal_pending
+    id: pending
+  - trigger: event
+    event_type: ai_trader_signal_closed
+    id: closed
+
+actions:
+  - variables:
+      signal_id: "{{ trigger.event.data.signal_id }}"
+      tag: "ai_trader_signal_{{ trigger.event.data.signal_id }}"
+      approve: "AI_TRADER_APPROVE_{{ trigger.event.data.signal_id }}"
+      reject: "AI_TRADER_REJECT_{{ trigger.event.data.signal_id }}"
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: closed
+        sequence:
+          - domain: mobile_app
+            type: notify
+            device_id: !input notify_device
+            message: clear_notification
+            data:
+              tag: "{{ tag }}"
+    default:
+      - domain: mobile_app
+        type: notify
+        device_id: !input notify_device
+        title: "{{ trigger.event.data.title }}"
+        message: "{{ trigger.event.data.message }}"
+        data:
+          tag: "{{ tag }}"
+          url: "{{ trigger.event.data.url }}"
+          clickAction: "{{ trigger.event.data.url }}"
+          actions:
+            - action: "{{ approve }}"
+              title: Freigeben
+            - action: "{{ reject }}"
+              title: Ablehnen
+              destructive: true
+      - wait_for_trigger:
+          - trigger: event
+            event_type: mobile_app_notification_action
+            event_data:
+              action: "{{ approve }}"
+          - trigger: event
+            event_type: mobile_app_notification_action
+            event_data:
+              action: "{{ reject }}"
+        timeout: !input timeout
+        continue_on_timeout: false
+      - action: >-
+          {{ 'ai_trader.approve_signal' if wait.trigger.event.data.action == approve else 'ai_trader.reject_signal' }}
+        data:
+          signal_id: "{{ signal_id }}"

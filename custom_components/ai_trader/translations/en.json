@@ -1,0 +1,227 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "AI Trader",
+        "description": "Address of the AI Trader app and the API token from its settings page (Settings → Home Assistant).",
+        "data": {
+          "url": "URL",
+          "token": "API token",
+          "verify_ssl": "Verify SSL certificate"
+        },
+        "data_description": {
+          "url": "e.g. https://trader.example.com"
+        }
+      },
+      "reauth_confirm": {
+        "title": "New API token",
+        "description": "The app at {url} rejected the token. Create a new one on its settings page.",
+        "data": {
+          "token": "API token"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "The app is not reachable.",
+      "invalid_auth": "The token was rejected.",
+      "invalid_url": "Not a valid http(s) address."
+    },
+    "abort": {
+      "already_configured": "This app is already set up.",
+      "reauth_successful": "Token updated."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "scan_interval": "Update interval (seconds)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total_value": {
+        "name": "Total value"
+      },
+      "cash": {
+        "name": "Cash"
+      },
+      "invested": {
+        "name": "Invested"
+      },
+      "net_deposits": {
+        "name": "Net deposits"
+      },
+      "total_profit": {
+        "name": "Total profit"
+      },
+      "total_return": {
+        "name": "Total return"
+      },
+      "day_change": {
+        "name": "Change today"
+      },
+      "day_change_percent": {
+        "name": "Change today (%)"
+      },
+      "cost_basis": {
+        "name": "Cost basis"
+      },
+      "unrealized_profit": {
+        "name": "Unrealized profit"
+      },
+      "realized_profit": {
+        "name": "Realized profit"
+      },
+      "positions": {
+        "name": "Positions"
+      },
+      "pending_signals": {
+        "name": "Pending proposals"
+      },
+      "open_orders": {
+        "name": "Open orders"
+      },
+      "last_run": {
+        "name": "Last run"
+      },
+      "forecast_median": {
+        "name": "7-day forecast"
+      },
+      "forecast_low_80": {
+        "name": "7-day forecast, 80 % low"
+      },
+      "forecast_high_80": {
+        "name": "7-day forecast, 80 % high"
+      },
+      "broker_synced": {
+        "name": "Broker sync"
+      },
+      "market_status": {
+        "name": "Market"
+      },
+      "next_open": {
+        "name": "Next open"
+      },
+      "next_close": {
+        "name": "Next close"
+      },
+      "drawdown_probability": {
+        "name": "S&P 500 drawdown probability"
+      },
+      "vix": {
+        "name": "VIX"
+      },
+      "expected_volatility": {
+        "name": "Expected volatility (20 days)"
+      },
+      "risk_level": {
+        "name": "Market risk",
+        "state": {
+          "low": "Low",
+          "normal": "Normal",
+          "elevated": "Elevated",
+          "high": "High"
+        }
+      }
+    },
+    "binary_sensor": {
+      "run_in_progress": {
+        "name": "Run in progress"
+      },
+      "pending": {
+        "name": "Proposals waiting"
+      },
+      "broker_problem": {
+        "name": "Broker sync problem"
+      },
+      "market_open": {
+        "name": "Market open"
+      }
+    },
+    "button": {
+      "run_agent": {
+        "name": "Start agent run"
+      },
+      "run_rules": {
+        "name": "Start rule run"
+      }
+    },
+    "calendar": {
+      "portfolio_calendar": {
+        "name": "Calendar"
+      },
+      "market_calendar": {
+        "name": "Market calendar"
+      }
+    }
+  },
+  "services": {
+    "approve_signal": {
+      "name": "Approve proposal",
+      "description": "Approves an open order proposal. Outside trading hours the order waits for the next open.",
+      "fields": {
+        "signal_id": {
+          "name": "Proposal",
+          "description": "ID of the proposal, from the event or the pending proposals sensor."
+        },
+        "config_entry_id": {
+          "name": "Instance",
+          "description": "Only needed with several AI Trader instances."
+        }
+      }
+    },
+    "reject_signal": {
+      "name": "Reject proposal",
+      "description": "Rejects an open proposal or cancels a scheduled order.",
+      "fields": {
+        "signal_id": {
+          "name": "Proposal",
+          "description": "ID of the proposal."
+        },
+        "config_entry_id": {
+          "name": "Instance",
+          "description": "Only needed with several AI Trader instances."
+        }
+      }
+    },
+    "run": {
+      "name": "Start run",
+      "description": "Starts a run of the agent or the rule engine for a portfolio.",
+      "fields": {
+        "portfolio_id": {
+          "name": "Portfolio",
+          "description": "Number of the portfolio in the app."
+        },
+        "engine": {
+          "name": "Engine",
+          "description": "agent or rules; empty uses the portfolio's engine."
+        },
+        "instruction": {
+          "name": "Instruction",
+          "description": "Optional instruction for the agent."
+        },
+        "config_entry_id": {
+          "name": "Instance",
+          "description": "Only needed with several AI Trader instances."
+        }
+      }
+    },
+    "import_history": {
+      "name": "Import history",
+      "description": "Fills the statistics of the value sensors again from the app's daily history.",
+      "fields": {
+        "portfolio_id": {
+          "name": "Portfolio",
+          "description": "Number of the portfolio in the app."
+        },
+        "config_entry_id": {
+          "name": "Instance",
+          "description": "Only needed with several AI Trader instances."
+        }
+      }
+    }
+  }
+}

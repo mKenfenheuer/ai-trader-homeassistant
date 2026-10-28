@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-10-19T14:00:00Z",
+  "market": {"is_open": true, "status": "Börse offen bis 22:00 Uhr", "next_open": "2026-10-19T06:00:00Z", "next_close": "2026-10-19T20:00:00Z"},
+  "market_risk": {"data_time": "2026-10-16T20:00:00Z", "vix": 18.4, "expected_volatility_20d": 0.152, "drawdown_probability": 0.21,
+                  "typical_drawdown_probability": 0.18, "risk_percentile": 64.0, "risk_level": "normal"},
+  "portfolios": [
+    {
+      "id": 1, "name": "Wachstum", "broker": "Paper", "currency": "EUR",
+      "cash": 9000.0, "invested": 1100.0, "total_value": 10100.0, "cost_basis": 1000.0,
+      "unrealized_profit": 100.0, "realized_profit": 0.0, "net_deposits": 10000.0, "total_profit": 100.0, "total_return_percent": 1.0,
+      "day_change": 100.0, "day_change_percent": 1.0,
+      "positions": [
+        {"instrument_id": 7, "isin": "US0378331005", "name": "Apple", "symbol": "AAPL", "quantity": 10, "average_cost": 100.0, "price": 110.0,
+         "market_value": 1100.0, "unrealized_profit": 100.0, "unrealized_percent": 10.0, "weight_percent": 10.89,
+         "day_change_percent": 10.0, "day_change": 100.0, "quote_time": "2026-10-19T13:59:00Z", "score_20d": 71.0, "expected_excess_20d": 0.012,
+         "forecast": {"target_date": "2026-10-23T00:00:00Z", "median": 110.5, "low_80": 104.2, "high_80": 116.9, "source": "model", "earnings_date": "2026-10-22T00:00:00Z"}}
+      ],
+      "pending_signals": [
+        {"id": 41, "portfolio_id": 1, "side": "buy", "status": "pending", "origin": "agent", "rule": "AgentDecision", "instrument_id": 7,
+         "isin": "US0378331005", "name": "Apple", "quantity": 2, "price": 110.0, "amount": 220.0, "reason": "Nachkauf auf Zielgewicht",
+         "status_message": null, "created_at": "2026-10-19T13:00:00Z", "expires_at": "2026-10-20T13:00:00Z", "scheduled_for": null}
+      ],
+      "open_orders": [],
+      "last_run": {"id": 300, "engine": "Agent", "trigger": "Schedule", "status": "completed", "started_at": "2026-10-19T12:00:00Z",
+                   "finished_at": "2026-10-19T12:03:00Z", "summary": "Ein Nachkauf vorgeschlagen.", "error": null},
+      "run_in_progress": false,
+      "automation": {"engine": "Agent", "schedule_enabled": true, "run_interval_minutes": 120, "pre_open_run": true, "buy_mode": "Propose", "sell_mode": "Propose"},
+      "forecast": {"as_of": "2026-10-16T00:00:00Z", "target_date": "2026-10-23T00:00:00Z", "median": 10110.0, "low_80": 10010.0, "high_80": 10220.0,
+                   "source": "model", "covered": 1, "positions": 1},
+      "broker_synced_at": null, "broker_sync_error": null
+    },
+    {
+      "id": 2, "name": "Echtgeld", "broker": "Trading212Live", "currency": "EUR",
+      "cash": 500.0, "invested": 0.0, "total_value": 500.0, "cost_basis": 0.0,
+      "unrealized_profit": 0.0, "realized_profit": 12.5, "net_deposits": 500.0, "total_profit": 0.0, "total_return_percent": 0.0,
+      "day_change": 0.0, "day_change_percent": 0.0,
+      "positions": [], "pending_signals": [], "open_orders": [], "last_run": null, "run_in_progress": false,
+      "automation": {"engine": "Rules", "schedule_enabled": false, "run_interval_minutes": 0, "pre_open_run": true, "buy_mode": "Propose", "sell_mode": "Propose"},
+      "forecast": null,
+      "broker_synced_at": "2026-10-19T13:55:00Z", "broker_sync_error": "Rate limit"
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "AI Trader",
+        "description": "Adresse der AI-Trader-App und der API-Token aus ihren Einstellungen (Einstellungen → Home Assistant).",
+        "data": {
+          "url": "URL",
+          "token": "API-Token",
+          "verify_ssl": "SSL-Zertifikat prüfen"
+        },
+        "data_description": {
+          "url": "z. B. https://trader.example.com"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Neuer API-Token",
+        "description": "Die App unter {url} hat den Token abgelehnt. Erzeuge in ihren Einstellungen einen neuen.",
+        "data": {
+          "token": "API-Token"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Die App ist nicht erreichbar.",
+      "invalid_auth": "Der Token wurde abgelehnt.",
+      "invalid_url": "Keine gültige http(s)-Adresse."
+    },
+    "abort": {
+      "already_configured": "Diese App ist bereits eingerichtet.",
+      "reauth_successful": "Token aktualisiert."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "scan_interval": "Abfrageintervall (Sekunden)"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "total_value": {
+        "name": "Depotwert"
+      },
+      "cash": {
+        "name": "Barmittel"
+      },
+      "invested": {
+        "name": "Investiert"
+      },
+      "net_deposits": {
+        "name": "Nettoeinzahlungen"
+      },
+      "total_profit": {
+        "name": "Gesamtgewinn"
+      },
+      "total_return": {
+        "name": "Gesamtrendite"
+      },
+      "day_change": {
+        "name": "Veränderung heute"
+      },
+      "day_change_percent": {
+        "name": "Veränderung heute (%)"
+      },
+      "cost_basis": {
+        "name": "Einstandswert"
+      },
+      "unrealized_profit": {
+        "name": "Unrealisierter Gewinn"
+      },
+      "realized_profit": {
+        "name": "Realisierter Gewinn"
+      },
+      "positions": {
+        "name": "Positionen"
+      },
+      "pending_signals": {
+        "name": "Offene Vorschläge"
+      },
+      "open_orders": {
+        "name": "Offene Orders"
+      },
+      "last_run": {
+        "name": "Letzter Lauf"
+      },
+      "forecast_median": {
+        "name": "7-Tage-Prognose"
+      },
+      "forecast_low_80": {
+        "name": "7-Tage-Prognose, 80 % unten"
+      },
+      "forecast_high_80": {
+        "name": "7-Tage-Prognose, 80 % oben"
+      },
+      "broker_synced": {
+        "name": "Broker-Abgleich"
+      },
+      "market_status": {
+        "name": "Börse"
+      },
+      "next_open": {
+        "name": "Nächste Öffnung"
+      },
+      "next_close": {
+        "name": "Nächster Handelsschluss"
+      },
+      "drawdown_probability": {
+        "name": "Wahrscheinlichkeit −5 % im S&P 500"
+      },
+      "vix": {
+        "name": "VIX"
+      },
+      "expected_volatility": {
+        "name": "Erwartete Volatilität (20 Tage)"
+      },
+      "risk_level": {
+        "name": "Marktrisiko",
+        "state": {
+          "low": "Niedrig",
+          "normal": "Normal",
+          "elevated": "Erhöht",
+          "high": "Hoch"
+        }
+      }
+    },
+    "binary_sensor": {
+      "run_in_progress": {
+        "name": "Lauf aktiv"
+      },
+      "pending": {
+        "name": "Vorschläge warten"
+      },
+      "broker_problem": {
+        "name": "Problem beim Broker-Abgleich"
+      },
+      "market_open": {
+        "name": "Börse offen"
+      }
+    },
+    "button": {
+      "run_agent": {
+        "name": "Agentenlauf starten"
+      },
+      "run_rules": {
+        "name": "Regellauf starten"
+      }
+    },
+    "calendar": {
+      "portfolio_calendar": {
+        "name": "Kalender"
+      },
+      "market_calendar": {
+        "name": "Börsenkalender"
+      }
+    }
+  },
+  "services": {
+    "approve_signal": {
+      "name": "Vorschlag freigeben",
+      "description": "Gibt einen offenen Ordervorschlag frei. Außerhalb der Handelszeit wartet die Order auf die nächste Öffnung.",
+      "fields": {
+        "signal_id": {
+          "name": "Vorschlag",
+          "description": "Nummer des Vorschlags, aus dem Ereignis oder dem Sensor der offenen Vorschläge."
+        },
+        "config_entry_id": {
+          "name": "Instanz",
+          "description": "Nur bei mehreren AI-Trader-Instanzen nötig."
+        }
+      }
+    },
+    "reject_signal": {
+      "name": "Vorschlag ablehnen",
+      "description": "Lehnt einen offenen Vorschlag ab oder storniert eine geplante Order.",
+      "fields": {
+        "signal_id": {
+          "name": "Vorschlag",
+          "description": "Nummer des Vorschlags."
+        },
+        "config_entry_id": {
+          "name": "Instanz",
+          "description": "Nur bei mehreren AI-Trader-Instanzen nötig."
+        }
+      }
+    },
+    "run": {
+      "name": "Lauf starten",
+      "description": "Startet einen Lauf des Agenten oder der Regelengine für ein Depot.",
+      "fields": {
+        "portfolio_id": {
+          "name": "Depot",
+          "description": "Nummer des Depots in der App."
+        },
+        "engine": {
+          "name": "Engine",
+          "description": "agent oder rules; leer nimmt die Engine des Depots."
+        },
+        "instruction": {
+          "name": "Anweisung",
+          "description": "Optionale Anweisung an den Agenten."
+        },
+        "config_entry_id": {
+          "name": "Instanz",
+          "description": "Nur bei mehreren AI-Trader-Instanzen nötig."
+        }
+      }
+    },
+    "import_history": {
+      "name": "Verlauf importieren",
+      "description": "Füllt die Statistiken der Wertsensoren erneut aus dem Tagesverlauf der App.",
+      "fields": {
+        "portfolio_id": {
+          "name": "Depot",
+          "description": "Nummer des Depots in der App."
+        },
+        "config_entry_id": {
+          "name": "Instanz",
+          "description": "Nur bei mehreren AI-Trader-Instanzen nötig."
+        }
+      }
+    }
+  }
+}

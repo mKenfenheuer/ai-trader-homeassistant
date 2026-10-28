@@ -1,0 +1,13 @@
+{
+  "domain": "ai_trader",
+  "name": "AI Trader",
+  "codeowners": ["@mKenfenheuer"],
+  "config_flow": true,
+  "dependencies": ["recorder"],
+  "documentation": "https://github.com/mKenfenheuer/ai-trader-homeassistant",
+  "integration_type": "hub",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/mKenfenheuer/ai-trader-homeassistant/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

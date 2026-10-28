@@ -1,0 +1,69 @@
+approve_signal:
+  fields:
+    signal_id:
+      required: true
+      example: 42
+      selector:
+        number:
+          min: 1
+          max: 2147483647
+          mode: box
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: ai_trader
+
+reject_signal:
+  fields:
+    signal_id:
+      required: true
+      example: 42
+      selector:
+        number:
+          min: 1
+          max: 2147483647
+          mode: box
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: ai_trader
+
+run:
+  fields:
+    portfolio_id:
+      required: true
+      example: 1
+      selector:
+        number:
+          min: 1
+          max: 2147483647
+          mode: box
+    engine:
+      selector:
+        select:
+          options:
+            - agent
+            - rules
+    instruction:
+      selector:
+        text:
+          multiline: true
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: ai_trader
+
+import_history:
+  fields:
+    portfolio_id:
+      required: true
+      example: 1
+      selector:
+        number:
+          min: 1
+          max: 2147483647
+          mode: box
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: ai_trader
