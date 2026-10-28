@@ -10,7 +10,7 @@
           "verify_ssl": "Verify SSL certificate"
         },
         "data_description": {
-          "url": "e.g. https://trader.example.com"
+          "url": "e.g. {example}"
         }
       },
       "reauth_confirm": {
